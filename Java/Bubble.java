@@ -7,6 +7,6 @@ class Bubble
         BufferedInputStream obj= new BufferedInputStream(in);
         int i=integer.parseint(in.readLine());
         
-
+        System.out.println("i = " + i);
     }
 }
