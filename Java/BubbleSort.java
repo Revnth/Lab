@@ -1,27 +1,37 @@
 	import java.util.Scanner;
-  
-    class BubbleSort {
-    	public static void main(String []args) {
-    		int n, c, d, swap;
-    		Scanner in = new Scanner(System.in);
-    		System.out.println("Input number of integers to sort");
-    		n = in.nextInt();
-    		int array[] = new int[n];
-    		System.out.println("Enter " + n + " integers");
-    		for (c = 0; c < n; c++) 
-    		      array[c] = in.nextInt();
-    		for (c = 0; c < ( n - 1 ); c++) {
-    			for (d = 0; d < n - c - 1; d++) {
-    				if (array[d] > array[d+1]) 
-    				/* For descending order use < */ {
-    					swap       = array[d];
-    					array[d]   = array[d+1];
-    					array[d+1] = swap;
-    				}
-    			}
-    		}
-    		System.out.println("Sorted list of numbers");
-    		for (c = 0; c < n; c++) 
-    		      System.out.println(array[c]);
-    	}
+  // Java program for implementation of Bubble Sort
+class BubbleSort
+{
+    void bubbleSort(int arr[])
+    {
+        int n = arr.length;
+        for (int i = 0; i < n-1; i++)
+            for (int j = 0; j < n-i-1; j++)
+                if (arr[j] > arr[j+1])
+                {
+                    // swap temp and arr[i]
+                    int temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                }
     }
+ 
+    /* Prints the array */
+    void printArray(int arr[])
+    {
+        int n = arr.length;
+        for (int i=0; i<n; ++i)
+            System.out.print(arr[i] + " ");
+        System.out.println();
+    }
+ 
+    // Driver method to test above
+    public static void main(String args[])
+    {
+        BubbleSort ob = new BubbleSort();
+        int arr[] = {64, 34, 25, 12, 22, 11, 90};
+        ob.bubbleSort(arr);
+        System.out.println("Sorted array");
+        ob.printArray(arr);
+    }
+}
