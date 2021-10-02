@@ -1,76 +1,109 @@
-/*Write a program using classes which inputs the name of the employee, year of
-joining,and position held in the company. The program should find out the years
-of experience of each employee and print them as super senior,senior and junior
-categories along with their experience.*/
-
 #include <iostream>
+#include <string.h>
 using namespace std;
+int const totalWorkingHours = 160; 
+class Employee
+{
+protected:
+    char name[10];
+    int empNo;
+    float payRate;
 
-class employee{
-char name[30];
-int yoj;
-int yoe;
-char pos[30];
 public:
-    void getData();
-    void putData();
-    int check(employee e1,employee e2);
+    Employee() {}
+    void getEmployeetData()
+    {
+        cout << "Enter the employee details below" << endl;
+        cout << "--------------------------------" << endl;
+        cout << "Enter the name:" << endl;
+        cin >> name;
+        cout << "Enter employment no." << endl;
+        cin >> empNo;
+        cout << "Enter pay rate:" << endl;
+        cin >> payRate;
+    }
+    virtual float pay() = 0;
+    void displayEmployeeData()
+    {
+        cout << "********************" << endl;
+        cout << "Name of employee: " << name << endl;
+        cout << "Employment No. " << empNo << endl;
+        cout << "Pay rate " << payRate << endl;
+        cout << "Salary: " << pay() << endl;
+        cout << "********************" << endl;
+    }
 };
-void employee::getData(){
-    cout << "Enter the name of Employee \n";
-    cin >> name;
-    cout<< "Year of joining "<<endl;
-    cin >> yoj;
-    cout<< "Position "<<endl;
-    cin >> pos;
-    yoe=2020-yoj;
+class Manager : public Employee
+{
+private:
+    bool isSalaried;
+    int workingHours;
 
-}
-int employee::check(employee e1,employee e2){
-    int flag;
-
-    if(e1.yoe<e2.yoe){
-        flag =1;
-    }else
-    flag=0;
-
-    return flag;
-
-}
- void employee::putData(){
- cout<<name <<" \t"<<yoe<<" \t"<<endl;
- }
-
-int main(){
-    int n,i,j,f;
-employee emp[20],temp;
-cout<< "Enter the number of Employees" <<endl;
-cin>> n;
-
-for(i=0;i<n;i++){
-    emp[i].getData();
-}
-
- for(i=0;i<n-1;i++){
-        for(j=0;j<n-i-1;j++){
-                f=temp.check(emp[j],emp[j+1]);
-        if(f==1){
-                temp=emp[j];
-            emp[j]=emp[j+1];
-            emp[j+1]=temp;
-
-        }
-
+public:
+    void getManagerData()
+    {
+        cout << "If salaried hourly enter 0 else 1:" << endl;
+        cin >> isSalaried;
+        if (!isSalaried)
+        {
+            cout << "Enter the total working hours:" << endl;
+            cin >> workingHours;
         }
     }
-cout << "name \t" << "yoe \t"<<endl;
-for(i=0;i<n;i++){
-    emp[i].putData();
+    float pay()
+    {
+        if (isSalaried)
+            return payRate * totalWorkingHours;
+        else
+            return payRate * workingHours;
+    }
+};
+class Supervisor : public Employee
+{
+private:
+    string department;
+
+public:
+    void getSupervisorData()
+    {
+        cout << "\n Department: ";
+        cin >> department;
+    }
+    
+    float pay()
+    {
+        return payRate * totalWorkingHours;
+    }
+};
+
+int main()
+{   Manager M1;
+    Supervisor S;
+   int choice;
+    cout << "\n *****enter details***** ";
+    cout << "\n 1. Manager";
+    cout << "\n 2. Supervisor";
+    cout << "\n Enter your choice(1 or 2): ";
+    cin >> choice;
+     switch (choice)
+      { case 1: 
+    
+    M1.getEmployeetData();
+    M1.getManagerData();
+    M1.displayEmployeeData();
+     break;
+     
+     case 2:
+
+    S.getEmployeetData();
+    S.getSupervisorData();
+    S.displayEmployeeData();
+     break;
+     default:cout << "\n Oops.....Incorrect Choice!";
+        };
+
+    return 0;
 }
-
-
-}
-
-
-
-
+  
+  
+       
